@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Автоматизированное Рабочее Место "КАМЕНКА"</title>
+    <link href="{% static 'css/header.css' %}" type="text/css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+	<link href="{% static 'css/session.css' %}" type="text/css" rel="stylesheet"/>
+	<link href="{% static 'css/schedule.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="header w-full">
+	{%block header%}{%include "header.html"%}{%endblock%}
+</div>
+<div class="m-t-30">
+	<h4 class="m-l-15">Текущий план</h4>
+	<table class="table table-bordered" id="currentPlan" style="background: blue;">
+		<thead class='table-header'>
+			<tr id="currentPlanHeader">
+				<th></th>
+				<th>Понедельник</th>
+				<th>Вторник</th>
+				<th>Среда</th>
+				<th>Четверг</th>
+				<th>Пятница</th>
+				<th>Суббота</th>
+				<th>Воскресенье</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="morning-shift">
+			  	<th scope="row">Утро</th>
+				{%for plan in planM%}
+				<td id = "M-{{plan.day.id}}" class="current-shift {{plan.myshift}}" style="background: {{plan.profile.color}}">{{plan.profile.user.username}}</td>
+				{%endfor%}
+			  </tr>
+			<tr class="evening-sfift">
+			  	<th scope="row">Вечер</th>
+				{%for plan in planE%}
+				<td id = "E-{{plan.day.id}}" class="current-shift {{plan.myshift}}" style="background: {{plan.profile.color}}">{{plan.profile.user.username}}
+				{%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+				{%endif%}
+				</td>
+				{%endfor%}
+			  </tr>
+			<tr class="evening-2-shift">
+			  <th scope="row">Вечер-2</th>
+			  {%for plan in planR%}
+				<td id = "R-{{plan.day.id}}" class="current-shift {{plan.myshift}}" style="background: {{plan.profile.color}}" title="">{{plan.profile.user.username}}
+				{%if plan.eveningActivity%}
+					<img class="tolpa" src="/media/tolpa.png" title="Резервная смена активна!">
+				{%else%}
+				{%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+				{%endif%}
+				{%endif%}
+				</td>
+				{%endfor%}
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="m-t-20 dis-flex">
+	<a href="" class="button-cdps button-print button-clicked" id="givevacant-Controller">Объявить вакантными</a>
+	<a href="" class="button-cdps button-stop button-clicked" id="takevacant-Controller">Забрать себе вакантные</a>
+</div>
+{%if isSunday%}
+<div class="m-t-10">
+	<h4 class="m-l-15">План на следующую неделю</h4>
+	<table class="table table-bordered" id="futurePlan" style="background: blue;">
+		<thead class='table-header'>
+			<tr id="futurePlanHeader">
+				<th></th>
+				<th>Понедельник</th>
+				<th>Вторник</th>
+				<th>Среда</th>
+				<th>Четверг</th>
+				<th>Пятница</th>
+				<th>Суббота</th>
+				<th>Воскресенье</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="morning-shift">
+			  <th scope="row">Утро</th>
+				{%for plan in futureM%}
+				<td class="next-shift" style="background: {{plan.profile.color}}">{{plan.profile.user.username}}</td>
+				{%endfor%}
+			  </tr>
+			<tr class="evening-sfift">
+			  <th scope="row">Вечер</th>
+				{%for plan in futureE%}
+				<td class="next-shift" style="background: {{plan.profile.color}}">{{plan.profile.user.username}}
+				{%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+				{%endif%}
+				</td>
+				{%endfor%}
+			  </tr>
+			<tr class="evening-2-shift">
+			  <th scope="row">Вечер-2</th>
+			  {%for plan in futureR%}
+				<td class="next-shift" style="background: {{plan.profile.color}}">{{plan.profile.user.username}}
+				{%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+				{%endif%}
+				</td>
+				{%endfor%}
+			</tr>
+		</tbody>
+	</table>
+</div>
+{%else%}
+<div class="m-t-10">
+	<h4 class="m-l-15">Выбор плана на следующую неделю</h4>
+	<table class="table table-bordered" style="background: blue;" id="teamChange">
+		<thead class='table-header'>
+			<tr id="teamChangeHeader">
+				<th></th>
+				<th>Понедельник</th>
+				<th>Вторник</th>
+				<th>Среда</th>
+				<th>Четверг</th>
+				<th>Пятница</th>
+				<th>Суббота</th>
+				<th>Воскресенье</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="morning-shift">
+			  <th scope="row">Утро</th>
+				{%for p in prefsM%}
+					{%if p.pref == "+"%}
+					  <td class="schedule-shift nice-time"></td>
+						{%elif p.pref == "-"%}
+						<td class="schedule-shift bad-time"></td>
+						{%else%}
+						<td class="schedule-shift"></td>
+					{%endif%}
+				{%endfor%}
+			</tr>
+			<tr class="evening-shift">
+			  <th scope="row">Вечер</th>
+			  {%for p in prefsE%}
+				{%if p.pref == "+"%}
+				<td class="schedule-shift nice-time">
+				  {%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+				  {%endif%}
+				</td>
+				{%elif p.pref == "-"%}
+				<td class="schedule-shift bad-time">
+					{%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+					{%endif%}
+				</td>
+				{%else%}
+				<td class="schedule-shift">
+					{%if plan.isPreHoliday%}
+					<img class="confetti" src="/media/confetti.png" title="Предпраздничный день. Конец смены в {{weekendTime}}">
+					{%endif%}
+				</td>
+				{%endif%} 
+			  {%endfor%}
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="m-t-20 dis-flex">
+	<a href="" class="button-cdps button-pay button-clicked" id="saveprefs-Controller">Сохранить</a>
+</div>
+{%endif%}
+<div class="m-t-20">
+	<table class="table table-bordered table-sm table-hover mt-4" id="userSalaryInfoTable">
+		<thead class="table-header gradiented">
+			<tr>
+				<th scope="col">Тип</th>
+	            <th scope="col">Начало</th>
+	            <th scope="col">Конец</th>
+	            <th scope="col">Часов</th>
+	            <th scope="col" title="Базовая сумма">База</th>
+	            <th scope="col" title="Бонусная сумма">Бонус</th>
+	            <th scope="col">Комментарий</th>
+			</tr>
+		</thead>
+		<tbody>
+			{%for elem in salary%}
+			<tr class="premiumTableContetntTr">
+				<td class="premiumTableContetnt-typeTD">{{elem.record_type}}</td>
+				<td>{{elem.start | date:"d-m-y H:i"}}</td>
+				<td>{{elem.end | date:"d-m-y H:i"}}</td>
+				<td>{% if elem.record_type == "Рабочая смена" or elem.record_type == "Сверхурочно" %}{{ elem.amount}}{% endif %}</td>
+				<td>{% if elem.record_type == "Рабочая смена" or elem.record_type == "Сверхурочно" or elem.record_type == "Выдача зарплаты" or elem.record_type == "Выдача аванса"%}{{elem.base}}{% endif %}</td>
+				<td>{% if elem.record_type == "Рабочая смена" or elem.record_type == "Сверхурочно" or elem.record_type == "Выдача премии"%}{{elem.bonus}}{% endif %}</td>
+				<td>{{elem.comment}}</td>
+			</tr>
+			{%endfor%}
+			{%for elem in premium%}
+			<tr class="premiumTableContetntTr">
+				<td class="premiumTableContetnt-typeTD">{{elem.type}}</td>
+				<td>{{elem.date | date:"d-m-y "}}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>{{ elem.amount}}</td>
+				<td>{{elem.comment}}</td>
+			</tr>
+			{%endfor%}
+			<tr>
+				<td>Общая</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>{{BaseSum}}</td>
+				<td>{{BonusSum}}</td>
+				<td>{{totalSum}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendor/moment/js/moment.min.js' %}"></script>
+<script src="{% static 'js/schedule.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+.nice-time{
+	background: green;
+}
+.bad-time{
+	background: red;
+}
+.current-shift, .next-shift{
+    color: white;
+    font-size: 20px;
+}
+.not-wanted {
+    background: peachpuff linear-gradient(90deg,
+    rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 50%
+    ) center center / 2em!important;
+    color: black;
+}
+.vacanted-shift {
+    background: peachpuff linear-gradient(90deg,
+    rgba(155, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 50%
+    ) center center / 2em!important;
+    color: black;
+}
+.vacanted-shift-change {
+   background: steelblue linear-gradient(
+    rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .2) 50%
+    ) center center / 100% 1em!important;
+    color: black;
+}
+
+.confetti, .tolpa{
+    height: 32px;
+    width: 32px;
+    position: relative;
+    left: 13%;
+}
+
+@media screen and (max-width: 525px){
+     #currentFull, #currentFull td, #nextFull, #nextFull td, #teamChange, #teamChange td{
+        font-size: 12px;
+    }
+    .confetti, .tolpa{
+        height: 20px;
+        width: 20px;
+    }
+    .flex-div{
+        width: 80%;
+    }
+    #scheduleFree, #scheduleFreeOk, #eveningShiftActive{
+        width: 50%;
+        font-size: 11px;
+        white-space: pre-wrap;
+    }
+    #userSalaryInfoTable{
+        font-size: 10px;
+    }
+    #userPremiumInfoTable{
+        font-size: 12px;
+    }
+}

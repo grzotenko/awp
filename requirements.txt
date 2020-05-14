@@ -1,0 +1,7 @@
+Django~=2.2.4
+psycopg2-binary==2.8.4
+django-crispy-forms==1.8.1
+python-escpos==2.2.0
+python-printer-escpos==0.0.3
+transliterate==1.10.2
+django-admin-tools==0.8.1

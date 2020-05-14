@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Автоматизированное Рабочее Место "КАМЕНКА"</title>
+    <link href="{% static 'css/header.css' %}" type="text/css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+	<link href="{% static 'css/booking.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="header pos-fixed w-full">
+	{%block header%}{%include "header.html"%}{%endblock%}
+	<div class="booking-menu m-t-25 dis-flex">
+		<div class="buttons">
+			<a href="{%url 'calendar_main'%}?date={{nowDate}}" class="button-cdps button-create">Добавить</a>
+		</div>
+	</div>
+</div>
+<table id="table-booking" class="table table-bordered table-fixed table-sm pos-absolute">
+	<thead class="table-header">
+		<tr>
+		  <th scope="col" class="text-center">Комната</th>
+		  <th scope="col" class="text-center" title="Количество людей">КЛ</th>
+		  <th scope="col" class="text-center">Тариф</th>
+		  <th scope="col" class="text-center" title="Дата брони">ДБ</th>
+		  <th scope="col" class="text-center" title="Начало брони">НБ</th>
+		  <th scope="col" class="text-center" title="Конец брони">КБ</th>
+		  <th scope="col" class="text-center">Информация</th>
+		  <th scope="col" class="text-center" title="Сумма депозита">СД</th>
+		</tr>
+	</thead>
+	<tbody id="tbody_booking">
+		{% for booking in bookings %}
+		<tr class="table-booking-tr" id="{{booking.id}}">
+			<td class="room-td"><p>{{ booking.room.name}}</p></td>
+			<td><p>{{booking.persons}}</p></td>
+			<td><p>{{booking.tariff.name}} ({{booking.discountB.name}})</p></td>
+			<td><p>{{booking.date}}</p></td>
+			<td><p>{{booking.time_start}}</p></td>
+			<td><p>{{booking.time_end}}</p></td>
+			<td><p>{{booking.info}}<br>{{booking.info1}}</p></td>
+			<td><p>{{booking.dep}} руб.</p></td>
+
+		</tr>
+		 {% endfor %}
+	</tbody>
+</table>
+
+<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{%static 'js/tablebooking.js'%}"></script>
+</body>
+</html>

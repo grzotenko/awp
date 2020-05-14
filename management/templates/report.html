@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Отчет</title>
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+
+  </head>
+  <body style="background:#e0eaff; ">
+  <div class="m-l-45 fs-31">
+    <h3>Отчет за день</h3>
+    <p>Выручка: {{full}} р. (в т.ч. картой - {{card}} р., наличными - {{cash}} р.)</p>
+    <p>{{admins}}</p>
+  </div>
+
+  </body>
+</html>

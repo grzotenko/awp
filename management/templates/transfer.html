@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Пересмена</title>
+    <style>
+      #loginForm
+      {
+        font-size:  24px;
+        text-align: right;
+        width: 50%;
+
+      }
+      #loginForm button 
+      {
+        background: blue;
+        padding: 10px 40px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+      }
+      
+    </style>
+  </head>
+  <body style="background:#e0eaff; ">
+    <form action="" method="post" id="loginForm">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit">Войти</button>
+    </form>
+  </body>
+</html>
