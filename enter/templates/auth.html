@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Авторизация</title>
+    <style>
+      #loginForm
+      {
+        font-size:  24px;
+        text-align: right;
+        width: 50%;
+
+      }
+      #loginForm button
+      {
+        background: blue;
+        padding: 10px 40px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+    </style>
+  </head>
+  <body style="background:#e0eaff; ">
+<!--  {% if form.errors %}-->
+<!--    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>-->
+<!--  {% endif %}-->
+    <form action="" method="post" id="loginForm">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Войти</button>
+    </form>
+<!--  {% if form.errors %}-->
+<!--    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>-->
+<!--  {% endif %}-->
+<!--  <form action='.' method='post'>-->
+<!--    {% csrf_token %}-->
+<!--    <label for="username">Логин:</label>-->
+<!--    <input type="text" name="username" value="" id="username">-->
+<!--    <label for="password">Пароль:</label>-->
+<!--    <input type="password" name="password" value="" id="password">-->
+
+<!--    <input type="submit" value="login" />-->
+<!--    <input type="hidden" name="next" value="{{ next|escape }}" />-->
+<!--  </form>-->
+  </body>
+</html>

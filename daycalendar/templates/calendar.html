@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Автоматизированное Рабочее Место "КАМЕНКА"</title>
+    <link href="{% static 'css/header.css' %}" type="text/css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+	<link href="{% static 'css/calendar.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="header w-full">
+	{%block header%}{%include "header.html"%}{%endblock%}
+	<div class="calendar-menu m-t-25 dis-flex">
+		<div class="buttons">
+			<input id="dataCalendar" type="date" value="{{nowDate}}" class="dateinput form-control m-l-40 m-b-15">
+		</div>
+		<div class="buttons m-l-105">
+			<a href="" class="button-cdps button-newbooking button-clicked" id="newbooking-Controller">Выбрать</a>
+		</div>
+	</div>
+</div>
+<div>
+	<table id="tableCalendar" class="table table-bordered table-fixed table-sm table-hover">
+		<thead id="table-header">
+			<tr class="table-header-tr">
+				<th scope="col" style="background: bisque;">Часы</th>
+				{%for k, v in rooms.items%}
+					<th scope="col" style="background: {{v.color}}; color: {{v.font}}">{{k}}</th>
+				{%endfor%}
+			</tr>
+		</thead>
+		<tbody class="table-calendar-content">
+		{%for shift in massiv%}
+			{%for k, v in shift.items%}
+				{%if forloop.first%}
+				<tr id="{{v.time.hour}}-{{v.time.minute}}{%if v.time.minute == 0%}0{%endif%}">
+				<td>{{v.time.hour}}:{{v.time.minute}}{%if v.time.minute == 0%}0{%endif%}</td>
+				{%endif%}
+				<td class="{{v.time.hour}}-{{v.time.minute}}-{{v.room}} tdClicked {{v.status}}" title="{{v.fullinfo}}" id="{{v.id}}">
+					{%if v.visible%}
+					{{v.info}}
+					{%endif%}
+				</td>
+				{%if forloop.last%}
+				</tr>
+				{%endif%}
+			{%endfor%}
+		{%endfor%}
+		</tbody>
+	</table>
+	<hr id="timeline">
+</div>
+<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendor/moment/js/moment.min.js' %}"></script>
+<script src="{%static 'js/calendar.js'%}"></script>
+</body>
+</html>

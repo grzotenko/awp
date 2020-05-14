@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Выход из системы</title>
+    <link href="{% static 'css/session.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+  </head>
+  <body style="background:#e0eaff; ">
+    <div class="buttons m-l-50 m-t-50">
+      <a href="{%url 'management_exit_all'%}" title="Завершить работу и показать отчет" class="button-cdps button-delete button-clicked" id="end-Controller">Завершить работу</a>
+      <a href="{%url 'management_exit_report' %}" class="button-cdps button-print button-clicked" id="review-Controller">Показать итоговый отчет</a>
+      {%if resAdm%}
+      <a href="{%url 'management_transfer' request.user %}" title="Выйти из основного аккаунта и сделать резервного админа основным" class="button-cdps button-stop button-clicked" id="change-Controller">Заменить главн. админа</a>
+      {%endif%}
+    </div>
+
+  </body>
+</html>

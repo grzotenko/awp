@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<div class="dis-flex">
+	<nav class="header-menu p-l-20">
+	  <ul class="topmenu">
+		<li><a href="/">Меню</a>
+		   <ul class="submenu">
+			<li><a href="{%url 'session_main'%}">Реестр сессий</a></li>
+			<li><a href="{%url 'booking_main'%}">Реестр броней</a></li>
+		    <li><a href="{%url 'calendar_main'%}?date={{nowDate}}">Календарь</a></li>
+			<li><a href="{%url 'management_main'%}">Управление</a></li>
+		   </ul>
+		</li>
+		  <li><a href="/">Пользователь: {{ user.username }} {{resAdm}}</a>
+		   <ul class="submenu">
+			<li><a href="{%url 'management_transfer' request.user %}">Пересмена</a></li>
+			 <li><a href="{%url 'management_exit'%}">Выход</a></li>
+			   {%if resAdm%}
+			 <li><a href="{%url 'management_removereserved'%}">Убрать резервного админа</a></li>
+			   {%else%}
+			 <li><a href="/management/addreserved/{{request.user}}">Добавить резервного админа</a></li>
+				{%endif%}
+		   </ul>
+		</li>
+	  </ul>
+	</nav>
+	<div id="cash-population" class="header-text fs-16 dis-flex p-b-10 p-t-5 p-r-20 pos-absolute right-0">
+		<p id="cash-population-1" class="headerp">В кассе: {{setting.cash_now}} р.</p>
+		<p id="cash-population-2" class="headerp m-l-15">Посетителей: {{countSessions}}</p>
+	</div>
+</div>

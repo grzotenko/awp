@@ -1,0 +1,93 @@
+{%extends "forms.html"%}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{%block content%}
+<main class="main m-4 text-center">
+  <div class="form-title">
+    <h2>
+      Форма редактирования брони
+    </h2>
+  </div>
+  <form method="POST" class="m-t-25 text-center">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.non_field_errors }}
+    <div class="form-element">
+        {{ form.date.errors }}
+        {{ form.date|as_crispy_field }}
+    </div>
+    <div class="form-element dis-flex">
+      <div>
+        {{ form.time_start.errors }}
+        {{ form.time_start|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.time_end.errors }}
+        {{ form.time_end|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.duration.errors }}
+        {{ form.duration|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="form-element dis-flex">
+      <div>
+        {{ form.name.errors }}
+        {{ form.name|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.phone.errors }}
+        {{ form.phone|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.persons.errors }}
+        {{ form.persons|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element">
+        {{ form.room.errors }}
+        {{ form.room|as_crispy_field }}
+    </div>
+    <div class="form-element">
+        {{ form.tariff.errors }}
+        {{ form.tariff|as_crispy_field }}
+    </div>
+    <div class="form-element">
+        {{ form.discountB.errors }}
+        {{ form.discountB|as_crispy_field }}
+    </div>
+    <div class="form-element dis-flex">
+      <div>
+        {{ form.dep_cash.errors }}
+        {{ form.dep_cash|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.dep_card.errors }}
+        {{ form.dep_card|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element">
+      {{ form.text.errors }}
+      {{ form.text|as_crispy_field }}
+    </div>
+    <div class="form-element dis-flex">
+      <div>
+        {{ form.services.errors }}
+        {{ form.services|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.includes.errors }}
+        {{ form.includes|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element dis-none">
+      {{ form.shift.errors }}
+      {{ form.shift|as_crispy_field }}
+    </div>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+    <button type="submit" class="btn button-create m-l-15" name="booking_activate">Активировать</button>
+    <button type="submit" class="btn button-create m-l-15" name="booking_delete">Удалить</button>
+  </form>
+</main>
+{%endblock%}
