@@ -1,0 +1,144 @@
+body{
+margin:0;
+padding: 0;
+background: #fff;
+}
+.module{
+  width: 100%;
+  position: absolute;
+  top: 70px;
+}
+.input *:not(span):focus + span {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.input span {
+  -webkit-transform: scale(0.993, 0.94);
+          transform: scale(0.993, 0.94);
+  transition: opacity .25s, -webkit-transform .5s;
+  transition: transform .5s, opacity .25s;
+  transition: transform .5s, opacity .25s, -webkit-transform .5s;
+  opacity: 0;
+  position: absolute;
+  z-index: 0;
+  margin: 4px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 3px #fff, 0 0 0 4px #fff, 3px -3px 30px #ab3326,  -3px 3px 30px darkorange;
+}
+::-webkit-input-placeholder {
+  color: #cbd0d5;
+}
+:-ms-input-placeholder {
+  color: #cbd0d5;
+}
+::-ms-input-placeholder {
+  color: #cbd0d5;
+}
+::placeholder {
+  color: #cbd0d5;
+}
+.input {
+  position: relative;
+  font-size: 1.5em;
+  background: linear-gradient(21deg, #0000FF, #7FFFD4);
+  padding: 3px;
+  display: inline-block;
+  border-radius: 9999em;
+}
+.input *:not(span) {
+  position: relative;
+  display: inherit;
+  border-radius: inherit;
+  margin: 0;
+  border: none;
+  outline: none;
+  padding: 0 .325em;
+  z-index: 1;
+}
+
+.select-box {
+  width: 31%;
+  margin-right: 1.5%;
+}
+
+.select-box select {
+  background: linear-gradient(21deg, #0000FF, #7FFFD4);
+  color: #fff;
+  height: 40px;
+  width: 100%;
+  text-align-last: center;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+.select-box select option {
+  padding: 30px;
+  background: #0000FF;
+}
+.highlightedOption{
+  background: #fff;
+}
+.flex-div{
+  display: flex;
+}
+.gradiented{
+  background: linear-gradient(21deg, #0000FF, #7FFFD4);
+}
+.autoMargin{
+  margin: auto;
+}
+.table-header{
+  color: #fff;
+}
+.table{
+  text-align: center;
+}
+.table-hover tbody tr:hover{
+  background-color: #fff;
+}
+tbody tr{
+  background: #e0eaff;
+}
+td{
+  empty-cells: show;
+}
+.modal{
+  top:50px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700');
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+@import url("https://fonts.googleapis.com/css?family=Lato");
+@font-face{
+    font-family: 'Roboto Slab normal';
+    src: url("../fonts/Roboto Slab/RobotoSlab-Light.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face{
+    font-family: 'Gotham Pro bold';
+    src: url("../fonts/Gotham Pro/GothamPro-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face{
+    font-family: 'Gotham Pro medium';
+    src: url("../fonts/Gotham Pro/GothamPro-Medium.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face{
+    font-family: 'Gotham Pro light';
+    src: url("../fonts/Gotham Pro/GothamPro-Light.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}

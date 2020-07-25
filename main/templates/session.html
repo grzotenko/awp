@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Автоматизированное Рабочее Место "КАМЕНКА"</title>
+    <link href="{% static 'css/header.css' %}" type="text/css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+	<link href="{% static 'css/session.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="header pos-fixed w-full">
+	{%block header%}{%include "header.html"%}{%endblock%}
+	<div class="sessions-menu m-t-25 dis-flex">
+		<div class="buttons">
+			<div class="buttons-create_delete">
+				<a href="{%url 'session_new'%}" class="button-cdps button-create">Добавить</a>
+				<a href="" class="button-cdps button-delete button-clicked" id="delete-Controller">Удалить</a>
+			</div>
+			<div class="buttons-print_stop">
+				<a href="" class="button-cdps button-print button-clicked" id="print-Controller">Печать</a>
+				<a href="" class="button-cdps button-stop button-clicked" id="stop-Controller">Стоп</a>
+			</div>
+		</div>
+		<div class="payment-block m-l-35">
+			<div class="payment-block_inputs dis-flex">
+				<input class="income" id="cashIncome" type="number" placeholder="наличные">
+				<input class="income" id="cardIncome" type="number" placeholder="карта">
+			</div>
+			<div class="payment-block_buttons m-t-8 dis-flex">
+				<a href="" class="button-cdps button-pay button-clicked" id="pay-Controller">Оплата</a>
+				<input class="income" id="allSum" type="number" placeholder="сумма" readonly>
+			</div>
+		</div>
+		<div class="filter-radio-block m-l-35">
+			<div class="filter_block dis-flex">
+				<select id="roomFilter" class="select filter-select filter-btn" >
+					<option value="hide">Все комнаты</option>
+					{%for room in rooms%}
+					<option value="{{room.id}}">{{room.name}}</option>
+					{%endfor%}
+				</select>
+				<select id="companyFilter" class="select filter-select filter-btn m-l-25" >
+					<option value="hide">Все компании</option>
+					{%for company in companies%}
+					<option value="{{company.id}}">{{company.CID}}</option>
+					{%endfor%}
+				</select>
+				<select id="activeFilter" class="select filter-select filter-btn" >
+					{%if inactive%}
+					<option value="active">Активные</option>
+					<option value="inactive" selected>Оплаченные</option>
+					{%else%}
+					<option value="active" selected>Активные</option>
+					<option value="inactive">Оплаченные</option>
+					{%endif%}
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+<table id="table-registry" class="table table-bordered table-fixed table-sm pos-absolute">
+	{%if inactive%}
+	<thead class="table-header">
+		<tr>
+		  <th scope="col" class="text-center"></th>
+		  <th scope="col" class="text-center">Комната</th>
+		  <th scope="col" class="text-center" title="Компания">К</th>
+		  <th scope="col" class="text-center">Тариф</th>
+		  <th scope="col" class="text-center">Время начала</th>
+		  <th scope="col" class="text-center">Время конца</th>
+		  <th scope="col" class="text-center" title="Платные услуги">ПлУ</th>
+		  <th scope="col" class="text-center" title="Бесплатные услуги">БесУ</th>
+		  <th scope="col" class="text-center">Комментарий</th>
+		  <th scope="col" title="Безналичная оплата">Карта</th>
+		  <th scope="col" title="Наличная оплата">Нал</th>
+		  <th scope="col" class="text-center" title="Сумма">$</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for session in listOffSess %}
+		<tr>
+			<td class="SID"><p>{{session.SID}}</p></td>
+			<td class="room-td"><p>{{ session.room.name}}</p></td>
+			<td class="company-td"><p>{{session.company.CID}}</p></td>
+			<td><p>{{session.company.tariff.name}}</p></td>
+			<td><p>{{session.start_dt}}</p></td>
+			<td><p>{{session.end_dt}}</p></td>
+			<td><p title="{{session.fullservsCount}} руб.">{{ session.fullservsText }}</p></td>
+			<td><p>
+				{%for service in session.includes.all%}
+					{%if forloop.last%}
+						{{service.name}}
+					{%else%}
+						{{service.name}},
+					{%endif%}
+				{%endfor%}
+			</p></td>
+			<td><p>{{session.text}}</p></td>
+			{%if record.cardpay%}
+				<td><p>{{record.cardpay}} руб.</p></td>
+			{%else%}
+				<td><p>-</p></td>
+			{%endif%}
+			{%if record.cashpay%}
+				<td><p>{{record.cashpay}} руб.</p></td>
+			{%else%}
+				<td><p>-</p></td>
+			{%endif%}
+			<td class="session-sum"><p>{{session.fullpay}} руб.</p></td>
+		</tr>
+		 {% endfor %}
+	</tbody>
+	{%else%}
+	<thead class="table-header">
+		<tr>
+		  <th scope="col" class="text-center"><input title='Выделить все'  id='chooseAllinSes' type="checkbox"></th>
+		  <th scope="col" class="text-center">Комната</th>
+		  <th scope="col" class="text-center" title="Компания">К</th>
+		  <th scope="col" class="text-center">Тариф</th>
+		  <th scope="col" class="text-center">Время начала</th>
+		  <th scope="col" class="text-center" title="Платные услуги">ПлУ</th>
+		  <th scope="col" class="text-center" title="Бесплатные услуги">БесУ</th>
+		  <th scope="col" class="text-center">Комментарий</th>
+		  <th scope="col" class="text-center" title="Сумма">$</th>
+		</tr>
+	</thead>
+	<tbody id="wd_id">
+		{% for session in sessions %}
+		<tr class="table-registry-tr" id="{{session.id}}">
+			<td class="SID"><p>{{session.SID}}</p></td>
+			<td class="room-td"><p>{{ session.room.name}}</p></td>
+			<td class="company-td"><p>{{session.company.CID}}</p></td>
+			<td><p>{{session.company.tariff.name}}</p></td>
+			<td><p>{{session.start_dt}}</p></td>
+			<td><p title="{{session.fullservsCount}} руб.">{{ session.fullservsText }}</p></td>
+			<td><p>
+				{%for service in session.includes.all%}
+					{%if forloop.last%}
+						{{service.name}}
+					{%else%}
+						{{service.name}},
+					{%endif%}
+				{%endfor%}
+			</p></td>
+			<td><p>{{session.text}}</p></td>
+			<td class="session-sum"><p>{{session.sum}} </p></td>
+		</tr>
+		 {% endfor %}
+	</tbody>
+	{%endif%}
+</table>
+
+<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{%static 'js/tablesession.js'%}"></script>
+</body>
+</html>

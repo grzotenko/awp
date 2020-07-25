@@ -1,0 +1,49 @@
+/* СѓР±РёСЂР°РµРј СЃС‚СЂР°С€РЅС‹Р№ РїСЏС‚РЅРёСЃС‚С‹Р№ С„РѕРЅ */
+#navigation-menu{
+    position: absolute;
+    left:30%;
+}
+/* РЅР° Р±РµР»РѕРј С„РѕРЅРµ С‚РµРїРµСЂСЊ РІСЃРµ СЂР°РІРЅРѕ РЅРёС‡РµРіРѕ РЅРµ РІРёРґРЅРѕ */
+#user-tools{
+    display: none;
+}
+
+/* Р·Р°РіРѕР»РѕРІРѕРє С‚РѕР»СЊРєРѕ Р·Р°РЅРёРјР°РµС‚ РјРµСЃС‚Рѕ */
+.dashboard-title{
+    display: none;
+}
+
+/* РґРѕР±Р°РІР»СЏРµРј СЃРІРѕСЋ РєР°СЂС‚РёРЅРєСѓ РІ С€Р°РїРєСѓ Рё СѓР±РёСЂР°РµРј РѕС‚С‚СѓРґР° С‚РµРєСЃС‚ */
+#header #branding h1 {
+    margin: 0;
+    padding: 5px 0px;
+    text-indent: -9999px;
+    background: white url(/static/img/kamenka256.jpg) center center no-repeat;
+    height: 30px;
+    width: 120%;
+    border-bottom: 1px solid lightgray;
+}
+#branding{
+    position:absolute;
+    left:4%;
+}
+/* РІРёР·СѓР°Р»СЊРЅРѕ РѕС‚РґРµР»СЏРµРј С…Р»РµР±РЅС‹Рµ РєСЂРѕС€РєРё */
+div.breadcrumbs {
+    display: block;
+    padding: 10px 15px;
+    border: 0;
+    background-position: 0 -8px;
+    border-bottom: 1px solid #ededed;
+}
+
+div.breadcrumbs a {
+    display: inline;
+}
+@media (max-width: 1024px){
+    #header #branding h1 {
+        width: 135%;
+    }
+    #navigation-menu li{
+        font-size: 11px;
+    }
+}

@@ -1,0 +1,77 @@
+{%extends "forms.html"%}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{%block content%}
+<main class="main m-4 text-center">
+  <div class="form-title">
+    <h2>
+      Форма добавления новых посетителей
+    </h2>
+  </div>
+  <form method="POST" class="m-t-25 text-center">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-element dis-flex">
+      <div class="form-element_services">
+        {{ form.room.errors }}
+        {{ form.room|as_crispy_field }}
+      </div>
+      <div class="form-element_services m-l-15">
+        {{ form.count.errors }}
+        {{ form.count|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element dis-flex">
+      <div class="form-element_services">
+        {{ form.tariff.errors }}
+        {{ form.tariff|as_crispy_field }}
+      </div>
+      <div class="form-element_services m-l-15">
+        {{ form.discount.errors }}
+        {{ form.discount|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element dis-flex">
+      <div>
+        {{ form.dep_cash.errors }}
+        {{ form.dep_cash|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.dep_card.errors }}
+        {{ form.dep_card|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element">
+    {{ form.text.errors }}
+    {{ form.text|as_crispy_field }}
+    </div>
+    <div class="form-element">
+      <label>Платные услуги</label>
+      <div class="dis-flex">
+        <div class="form-element_services">
+          {{ form.servicesAll.errors }}
+          {{ form.servicesAll|as_crispy_field }}
+        </div>
+        <div class="form-element_services m-l-15">
+          {{ form.servicesChange.errors }}
+          {{ form.servicesChange|as_crispy_field }}
+        </div>
+      </div>
+    </div>
+    <div class="form-element">
+      <label>Бесплатные услуги</label>
+      <div class="dis-flex">
+        <div class="form-element_services">
+          {{ form.includesAll.errors }}
+          {{ form.includesAll|as_crispy_field }}
+        </div>
+        <div class="form-element_services m-l-15">
+          {{ form.includesChange.errors }}
+          {{ form.includesChange|as_crispy_field }}
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+  </form>
+</main>
+{%endblock%}

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'booking',
     'daycalendar',
     'management',
+    'warehouse',
 ]
 TABBED_ADMIN_USE_JQUERY_UI = True
 MIDDLEWARE = [

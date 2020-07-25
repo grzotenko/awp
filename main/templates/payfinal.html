@@ -1,0 +1,15 @@
+{%extends "forms.html"%}
+{% load staticfiles %}
+{%block content%}
+<main class="main m-4 text-center">
+  <div class="form-title">
+    <h2>
+      Оплата успешно проведена!
+      Сдача: {{payment}}
+    </h2>
+  </div>
+  <div class="form-title">
+    <a href="{%url 'session_main'%}" class="button-cdps">OK</a>
+  </div>
+</main>
+{%endblock%}

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Автоматизированное Рабочее Место "КАМЕНКА"</title>
+    <link href="{% static 'css/header.css' %}" type="text/css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+	<link href="{% static 'css/storage.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/util.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="header pos-fixed w-full">
+	{%block header%}{%include "header.html"%}{%endblock%}
+	<div id="warehousemenu">
+		<nav id="warehouseTabsMenu">
+			<div class="warehouseSelector gradiented"></div>
+			<a href="#" class="warehouseTabsMenu_tab active">Движения на складе</a>
+			<a href="#" class="warehouseTabsMenu_tab">Учет расходников</a>
+			<a href="#" class="warehouseTabsMenu_tab">Отчет за период</a>
+		</nav>
+		<div id="warehouse-tools">
+			<div id="storage-tool" class="warehouse-tool active">
+			<button type="button" class="btn openNameModalbtn gradiented" data-toggle="modal" data-target="#inModal" id="inButton">Приход
+			</button>
+			<button type="button" class="btn openNameModalbtn gradiented" id="outButton" data-toggle="modal" data-target="#outModal">Расход
+			</button>
+
+
+			</div>
+			<div id="consumables-tool" class="warehouse-tool">
+			{% csrf_token %}
+			<div id="warehouse-selects" class="d-flex">
+			<div class="select-box">
+			<select id="warehouse-selects-category">
+			<option value="hide">-- Все категории --</option>
+			{%for cat in cats%}
+				<option value={{cat.cat_title}} >{{cat.cat_title}}</option>
+			{%endfor%}
+			</select></div>
+			<div class="select-box">
+			<select id="warehouse-selects-subcategory">
+			<option value="hide">-- Все подкатегории --</option>
+			{%for subcat in subcats%}
+				<option value={{subcat.subcat_title}} >{{subcat.subcat_title}}</option>
+			{%endfor%}
+			</select></div>
+			<div class="select-box">
+			<select id="warehouse-selects-good">
+			<option value="hide">-- Все товары --</option>
+			{%for good in goods%}
+				<option value={{good.title}} >{{good.title}}</option>
+			{%endfor%}
+			</select></div>
+			<a class="btn btn-primary" href="/warehouse/export/" target="_blank">Дозакуп</a>
+			</div>
+			</div>
+			<div id="periodreport-tool" class="warehouse-tool">
+			<div class="d-flex">
+				<div class="select-box">
+					<select id="period-selects-category">
+						<option value="hide">-- Все категории --</option>
+						{%for cat in cats%}
+							<option value={{cat.cat_title}} >{{cat.cat_title}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<div class="select-box">
+					<select id="period-selects-subcategory">
+						<option value="hide">-- Все подкатегории --</option>
+						{%for subcat in subcats%}
+							<option value={{subcat.subcat_title}} >{{subcat.subcat_title}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<div class="select-box">
+					<select id="period-selects-good">
+						<option value="hide">-- Все товары --</option>
+						{%for good in goods%}
+							<option value={{good.title}} >{{good.title}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<button type="button" id="periodButton" class="btn openNameModalbtn gradiented" data-toggle="modal" data-target="#periodModal">Период
+				</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="warehouseMain">
+
+	<div id="warehouseTabs">
+		<table class="table table-bordered table-sm table-hover storageTab active">
+			<thead class="table-header" id="wrhsHeader">
+				<tr>
+					<th scope="col">Админ</th>
+					<th scope="col">Дата</th>
+					<th scope="col">Тип</th>
+					<th scope="col">Категория</th>
+					<th scope="col">Подкатегория</th>
+					<th scope="col">Товар</th>
+					<th scope="col">Объем</th>
+					<th scope="col">Кол-во</th>
+					<th scope="col">Стоимость</th>
+					<th scope="col">Цена</th>
+					<th scope="col">Комментарий</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for semen in inout%}
+				<tr class="table-storage-content-tr">
+					<td>{{semen.users}}</td>
+					<td>{{semen.date| date:"d-m-y"}}</td>
+					<td class="storage_type">{{semen.type_operations}}</td>
+					<td>{{semen.title_goods.subcat.category.cat_title}}</td>
+					<td>{{semen.title_goods.subcat.subcat_title}}</td>
+					<td>{{semen.title_goods.title}}</td>
+					<td>{{semen.volume}}</td>
+					<td>{{semen.amount}}</td>
+					<td>{{semen.cost}}</td>
+					<td>{{semen.price}}</td>
+					<td>{{semen.comment}}</td>
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+		<table id="table-consumables" class="table table-bordered table-sm table-hover storageTab">
+			<thead class="table-header">
+				<tr>
+					<th scope="col">Категория</th>
+					<th scope="col">Подкатегория</th>
+					<th scope="col">Товар</th>
+					<th scope="col">Объем</th>
+					<th scope="col">Остаток на складе</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%for v in vol%}
+					<tr class="table-consumables-tr" style="color: {{v.color}}">
+						<td>{{v.cat}}</td>
+						<td>{{v.sub}}</td>
+						<td class="table-consumables-good-td">{{v.g}}</td>
+						<td>{{v.volume}}</td>
+						<td>{{v.amount}}</td>
+					</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+		<table id="period-table" class="table table-bordered table-sm table-hover storageTab">
+			<thead class="table-header" id="periodHeader">
+				<tr>
+					<th scope="col">Категория</th>
+					<th scope="col">Подкатегория</th>
+					<th scope="col">Товар</th>
+					<th scope="col">Кол-во</th>
+					<th scope="col">Стоимость</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for p in period%}
+					<tr  class="period-table-tr">
+						<td>{{p.cat}}</td>
+						<td>{{p.sub}}</td>
+						<td class="period-table-good-td">{{p.good}}</td>
+						<td>{{p.units}}</td>
+						<td>{{p.cost}}</td>
+					</tr>
+				{%endfor%}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class="period-total-sum">Общая сумма: {{totalsum}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal fade" id="inModal" tabindex="-1" role="dialog" aria-labelledby="inModalLabel" aria-hidden="true">
+		<div class="modal-dialog wrhsModal" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="inModalLabel">Приход товара</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				{% csrf_token %}
+				<div class="modal-body">
+					<div class="form-group d-flex">
+						<div class="select-box">
+							<select id="warehouseIn-category">
+								<option value="hide">-- Все категории --</option>
+								{%for cat in cats%}
+									<option value={{cat.cat_title}} >{{cat.cat_title}}</option>
+								{%endfor%}
+							</select>
+						</div>
+						<div class="select-box">
+							<select id="warehouseIn-subcategory">
+								<option value="hide">-- Все подкатегории --</option>
+								{%for subcat in subcats%}
+									<option value={{subcat.subcat_title}} >{{subcat.subcat_title}}</option>
+								{%endfor%}
+							</select>
+						</div>
+						<div class="select-box">
+							<select id="warehouseIn-good">
+								<option value="hide">-- Все товары --</option>
+								{%for good in goods%}
+									<option value={{good.title}} >{{good.title}}</option>
+								{%endfor%}
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<input id="wrhsInvolume" class="volumeValue wrhsModalInput wrhsModalInputOut" type="number" step="0.001" min="0" placeholder="Объем упаковки">
+
+						<input id="wrhsInamount" class="amountValue  wrhsModalInput wrhsModalInputOut" type="number" min="0" placeholder="Количество упаковок">
+
+						<input id="wrhsInprice" type="number" class=" wrhsModalInput wrhsModalInputOut" step="0.01" placeholder="Cтоимость упаковки" min="0">
+
+						<input id="wrhsIncost" type="number" class=" wrhsModalInput wrhsModalInputOut" step="0.01" placeholder="Общая стоимость" min="0">
+					</div>
+					<div class="modal-footer">
+						<input type="submit" value="Подтвердить" class="btn btn-secondary ml-5 wthsModalBtn" id="wthsModalInBtn" data-dismiss="modal">
+						<button type="button" class="btn btn-secondary  ml-1 closeButtonTablet" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="outModal" tabindex="-1" role="dialog" aria-labelledby="outModalLabel" aria-hidden="true">
+		<div class="modal-dialog wrhsModal" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="outModalLabel">Расход товара</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		</div>
+		{% csrf_token %}
+
+		<div class="modal-body">
+		<div class="form-group d-flex">
+			<div class="select-box">
+		<select id="warehouseOut-category">
+		<option value="hide">-- Все категории --</option>
+		{%for cat in cats%}
+			<option value={{cat.cat_title}} >{{cat.cat_title}}</option>
+		{%endfor%}
+		</select>
+		</div>
+		<div class="select-box">
+		<select id="warehouseOut-subcategory">
+		<option value="hide">-- Все подкатегории --</option>
+		{%for subcat in subcats%}
+			<option value={{subcat.subcat_title}} >{{subcat.subcat_title}}</option>
+		{%endfor%}
+		</select></div>
+		<div class="select-box">
+		<select id="warehouseOut-good">
+		<option value="hide">-- Все товары --</option>
+		{%for good in goods%}
+			<option value={{good.title}} >{{good.title}}</option>
+		{%endfor%}
+		</select></div>
+		</div>
+		<div class="form-group d-flex">
+		<div class="select-box">
+		<select id="warehouseOut-volume">
+		<option value="hide">-- Объем --</option>
+
+		</select></div>
+
+		<input id="outModalAmount" class="amountValue  wrhsModalInput" type="number" min="0" placeholder="Количество упаковок" disabled="disabled">
+
+		<input type="text" id="outModalComment" class=" wrhsModalInput "  placeholder="Комментарий" maxlength="50">
+		</div>
+		<div class="modal-footer">
+		<input type="submit" value="Подтвердить" class="btn btn-secondary ml-5 wthsModalBtn" id="wthsModalOutBtn" data-dismiss="modal">
+		<button type="button" class="btn btn-secondary  ml-1 closeButtonTablet" data-dismiss="modal">Закрыть</button>
+		</div>
+		</div>
+		</div>
+		</div>
+	</div>
+	<div class="modal fade" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="periodModalLabel" aria-hidden="true">
+		<div class="modal-dialog wrhsModal" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="periodModalLabel">Выберите период</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		</div>
+		{% csrf_token %}
+
+		<div class="modal-body">
+		<div class="form-group d-flex">
+			<p class="periodp">Начало</p>
+		<input class=" wrhsModalInput" id="period_start" type="date">
+		<p class="periodp">Конец</p>
+		<input class="  wrhsModalInput" id="period_end" type="date">
+		</div>
+		<div class="form-group d-flex">
+
+		</div>
+		<div class="modal-footer">
+		<input type="submit" value="Подтвердить" class="btn btn-secondary ml-5 wthsModalBtn" id="periodBtn" data-dismiss="modal">
+		<button type="button" class="btn btn-secondary  ml-1 closeButtonTablet" data-dismiss="modal">Закрыть</button>
+		</div>
+		</div>
+		</div>
+		</div>
+	</div>
+</div>
+
+<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{%static 'js/storage.js'%}"></script>
+</body>
+</html>

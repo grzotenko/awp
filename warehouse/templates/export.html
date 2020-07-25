@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Дозакуп</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{% static 'css/globalWare.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/storage.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+	<a class="btn btn-primary ayemargin" href="/warehouse/sendMessage/">Отправить</a>
+	<table class="table table-bordered table-sm table-hover">
+		<thead class="table-header"style="background: blue;">
+			<tr>
+				<th scope="col">Категория</th>
+				<th scope="col">Подкатегория</th>
+				<th scope="col">Товар</th>
+				<th scope="col">Остаток на складе</th>
+			</tr>
+		</thead>
+		<tbody>
+		{%for r in rests%}
+			<tr class="table-consumables-tr" style="color: {{r.color}}">
+				<td>{{r.cat}}</td>
+				<td>{{r.sub}}</td>
+				<td>{{r.g}}</td>
+				<td>{{r.rest}}</td>
+			</tr>
+		{%endfor%}
+		</tbody>
+	</table>
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="{% static 'js/export.js' %}"></script>
+</body>
+</html>
+
+
+
+

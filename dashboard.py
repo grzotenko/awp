@@ -63,6 +63,10 @@ class CustomIndexDashboard(Dashboard):
             title=('Управление'),
             models=['management.models.*', ],
         ))
+        self.children.append(modules.ModelList(
+            title=('Склад'),
+            models=['warehouse.models.*', ],
+        ))
 
 
 

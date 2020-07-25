@@ -1,0 +1,45 @@
+{%extends "forms.html"%}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{%block content%}
+<main class="main m-4 text-center">
+  <div class="form-title">
+    <h2>
+      Форма редактирования сессии
+    </h2>
+  </div>
+  <form method="POST" class="m-t-25 text-center">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.non_field_errors }}
+    <div class="form-element">
+        {{ form.room.errors }}
+        {{ form.room|as_crispy_field }}
+    </div>
+    <div class="form-element dis-flex">
+      <div>
+        {{ form.dep_cash.errors }}
+        {{ form.dep_cash|as_crispy_field }}
+      </div>
+      <div class="m-l-15">
+        {{ form.dep_card.errors }}
+        {{ form.dep_card|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-element">
+      {{ form.text.errors }}
+      {{ form.text|as_crispy_field }}
+    </div>
+    <div class="form-element">
+          {{ form.service.errors }}
+          {{ form.service|as_crispy_field }}
+    </div>
+    <div class="form-element">
+          {{ form.include.errors }}
+          {{ form.include|as_crispy_field }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Сохранить</button>
+  </form>
+</main>
+{%endblock%}

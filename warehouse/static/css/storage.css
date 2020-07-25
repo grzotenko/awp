@@ -1,0 +1,142 @@
+#table-consumables, #period-table{
+    display: none;
+}
+.table{
+    text-align: center;
+}
+.warehouseMain{
+    position:absolute;
+    top:82px;
+}
+#inButton{
+    background: green;
+}
+#periodButton{
+    background: blue;
+}
+#outButton{
+    background: red;
+}
+#warehousemenu{
+  position:fixed;
+  top: 80px;
+  width: 100%;
+  z-index: 3;
+  background: #e0eaff;
+  height: 55px;
+  }
+#warehouseTabsMenu{
+  margin-top:5px;
+  margin-left: 20px;
+  font-size:15px;
+  padding:0px;
+  list-style:none;
+  box-shadow:0px 5px 20px rgba(0,0,0,0.1);
+  display:inline-block;
+  border-radius:50px;
+  position:relative;
+
+}
+#warehouseTabsMenu a{
+text-decoration:none;
+  color: #000;
+  padding:10px 20px;
+  display:inline-block;
+  position:relative;
+  z-index:1;
+  transition-duration:0.6s;
+}
+#warehouseTabs{
+    width:100%;
+    position:fixed;
+}
+.table-header{
+    color: #fff;
+}
+#warehouseTabsMenu a.active{
+    color: red;
+}
+ .warehouseSelector{
+  height:100%;
+  display:inline-block;
+  position:absolute;
+  left:0px;
+  top:0px;
+  z-index:1;
+  border-radius:50px;
+  transition-duration:0.6s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ab3326', endColorstr='darkorange',GradientType=1 );
+}
+#warehouse-tools{
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    width: 50%;
+}
+#warehouse-selects .select, .modal .select{
+    height: 40px;
+}
+#consumables-tool, #periodreport-tool{
+    display: none;
+}
+.wrhsModal{
+  max-width: 800px !important;
+}
+.wrhsModalInput{
+
+  height: 40px;
+  width: 31%;
+  margin-right: 1%;
+}
+.wrhsModalInputOut{
+  width: 22.8%;
+}
+.openNameModalbtn{
+  color: #fff !important;
+  margin-right:  10px;
+}
+.storageTab{
+  position: relative;
+  margin-top: 55px;
+}
+.storageTab th{
+   position: sticky;
+  z-index: 1;
+  top: 125px;
+  background: #0000FF;
+}
+.periodp{
+  line-height: 40px;
+  width: 13%;
+  text-align: center;
+}
+#warehouse-selects .select-box, #periodreport-tool .select-box{
+  width: 27%;
+}
+.ayemargin{
+  margin: 10px;
+}
+
+.select-box {
+  width: 31%;
+  margin-right: 1.5%;
+}
+
+.select-box select {
+  background: linear-gradient(21deg, #0000FF, #7FFFD4);
+  color: #fff;
+  height: 40px;
+  width: 100%;
+  text-align-last: center;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+.select-box select option {
+  padding: 30px;
+  background: #0000FF;
+}
